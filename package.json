@@ -1,0 +1,16 @@
+{
+  "name": "al-rawnaq-ladies-salon",
+  "version": "1.0.0",
+  "description": "Opulent luxury one-page website for Al Rawnaq Ladies Salon in Ras Al-Khaimah",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y http-server . -p 8000"
+  },
+  "keywords": [
+    "beauty-salon",
+    "luxury-website",
+    "ladies-salon"
+  ],
+  "author": "Ascore Creative",
+  "license": "ISC"
+}
