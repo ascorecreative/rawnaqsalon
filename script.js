@@ -339,24 +339,45 @@ function initContactForm() {
 
     try {
       // Simulate validation / submission delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, 1200));
 
       const formData = new FormData(form);
       const name = formData.get('name');
+      const phone = formData.get('phone');
       const service = formData.get('service');
+      const message = formData.get('message');
       const refNum = `RNQ-${Math.floor(10000 + Math.random() * 90000)}`;
+
+      // Construct the formatted WhatsApp message
+      const whatsappText = `Hello Al Rawnaq Ladies Salon, I would like to submit a booking inquiry:
+
+✨ *Booking Details* ✨
+• *Name:* ${name}
+• *Phone:* ${phone}
+• *Service:* ${service}
+• *Notes/Date:* ${message || 'Not specified'}
+• *Reference ID:* ${refNum}
+
+Please confirm availability. Thank you!`;
+
+      const encodedText = encodeURIComponent(whatsappText);
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=971504692575&text=${encodedText}`;
 
       // Present success feedback
       feedback.className = 'form-feedback success';
       feedback.innerHTML = `
         <strong>Thank you, ${name}!</strong><br>
-        Your booking inquiry for <em>${service}</em> has been received.<br>
-        Booking Reference: <strong>${refNum}</strong>.<br><br>
-        👉 To confirm instantly, click our WhatsApp widget below to chat directly with our reservation desk!
+        Your inquiry has been generated (Reference: <strong>${refNum}</strong>).<br><br>
+        🚀 <em>Opening WhatsApp to submit your details directly to our reservation desk...</em>
       `;
 
       // Reset form fields
       form.reset();
+
+      // Redirect/Open WhatsApp in a new window/tab after a brief pause
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+      }, 1200);
 
     } catch (error) {
       feedback.className = 'form-feedback error';
